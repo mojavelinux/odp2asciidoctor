@@ -3,7 +3,8 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
 	xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
 	xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
-	xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0">
+	xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
 
 	<xsl:output method="text" encoding="utf-8" />
 
@@ -35,7 +36,11 @@
 
 <!-- template for unordered list item content -->
 	<xsl:template match="text:list-item/text:p">
-		<xsl:value-of select="text()" /><xsl:text>&#xa;</xsl:text>
+		<xsl:apply-templates/><xsl:text>&#xa;</xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="text:a">
+		link:<xsl:value-of select="@xlink:href"/>[<xsl:value-of select="text()"/>]
 	</xsl:template>
 
 </xsl:stylesheet>
