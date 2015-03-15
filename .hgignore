@@ -1,0 +1,13 @@
+syntax: regexp
+.springBeans
+target
+.settings/
+.classpath
+.project
+dist
+.*~
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$
