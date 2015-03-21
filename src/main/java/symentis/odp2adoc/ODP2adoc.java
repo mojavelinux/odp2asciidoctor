@@ -1,23 +1,22 @@
 package symentis.odp2adoc;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.List;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.jdom.transform.JDOMSource;
+import org.jopendocument.dom.ODPackage;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.io.IOUtils;
-import org.jdom.transform.JDOMSource;
-import org.jopendocument.dom.ODPackage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.List;
 
 public class ODP2adoc {
 
@@ -62,11 +61,10 @@ public class ODP2adoc {
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 		Transformer transformer = factory.newTransformer(new StreamSource(getStylesheet()));
-		StringWriter writer = new StringWriter();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(adocFile));
 		transformer.transform(new JDOMSource(openDocument.getContent().getDocument()), new StreamResult(writer));
-		IOUtils.write(writer.getBuffer().toString(), new FileWriter(adocFile));
-		System.out.println(writer.getBuffer());
 
+        Files.readAllLines(adocFile.toPath()).forEach(System.out::println);
 	}
 
 	private static InputStream getStylesheet() {
