@@ -11,3 +11,5 @@ dist
 \.chg\..*$
 \.rej$
 \.conflict\~$
+.*.iml
+.idea/
